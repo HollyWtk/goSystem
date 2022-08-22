@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type ReceivePaymentMerchantApply struct {
+type MerchantApply struct {
 	Id                    int64     `xorm:"'F_id' not null pk autoincr BIGINT(20)"`
 	MerchantId            string    `xorm:"'F_merchant_id' not null comment('商户编号') index unique VARCHAR(20)"`
 	UserNo                string    `xorm:"'F_user_no' not null comment('商户对应用户编号') VARCHAR(128)"`
@@ -50,6 +50,6 @@ type ReceivePaymentMerchantApply struct {
 	HkLicenseInfo         string    `xorm:"'F_hk_license_info' default '' comment('香港企业营业制造信息') VARCHAR(1000)"`
 }
 
-func (m *ReceivePaymentMerchantApply) TableName() string {
+func (m *MerchantApply) TableName() string {
 	return "t_receive_payment_merchant_apply"
 }

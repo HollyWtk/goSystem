@@ -9,20 +9,28 @@ import (
 var jwtKey []byte
 
 func init() {
-	jwtKey = []byte(os.Getenv("JWT_SECRET"))
+	secret := os.Getenv("JWT_SECRET")
+	if len(secret) > 0 {
+		jwtKey = []byte(secret)
+	} else {
+		jwtKey = []byte("YHH_SECRET")
+	}
+
 }
 
 type Claims struct {
-	Uid int
+	Uid      int
+	Username string
 	gojwt.StandardClaims
 }
 
 // 生成Token
-func Award(uid int) (string, error) {
+func Award(uid int, username string) (string, error) {
 	// 过期时间 默认7天
 	expireTime := time.Now().Add(7 * 24 * time.Hour)
 	claims := &Claims{
-		Uid: uid,
+		Uid:      uid,
+		Username: username,
 		StandardClaims: gojwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
 			IssuedAt:  time.Now().Unix(),

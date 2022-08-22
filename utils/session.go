@@ -51,15 +51,15 @@ func ParseSession(session string) (*Session, error) {
 	return &Session{Id: int, MTime: time}, nil
 }
 
-func (self *Session) String() string {
-	timeStr := self.MTime.Format("2006-01-02 15:04:05")
-	str := fmt.Sprintf("%d|%s", self.Id, timeStr)
+func (s *Session) String() string {
+	timeStr := s.MTime.Format("2006-01-02 15:04:05")
+	str := fmt.Sprintf("%d|%s", s.Id, timeStr)
 	data, _ := AesCBCEncrypt([]byte(str), []byte(key), []byte(key), openssl.ZEROS_PADDING)
 	encode := base64.StdEncoding.EncodeToString(data)
 	return encode
 }
 
-func (self *Session) IsValid() bool {
-	diff := time.Now().Sub(self.MTime)
+func (s *Session) IsValid() bool {
+	diff := time.Now().Sub(s.MTime)
 	return diff-time.Duration(validTime) < 0
 }

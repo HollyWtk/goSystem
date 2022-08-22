@@ -80,7 +80,7 @@ func saveNewApply(req *model2.ApplyReq, merchantId string, merchantApply *models
 	}
 	merchantApply = &models.MerchantApply{
 		MerchantId:          merchantId,
-		ChannelStatus:       constant.AUTH_WAIT,
+		ChannelStatus:       string(rune(constant.AUTH_WAIT)),
 		CheckStatus:         constant.WAIT_COMPLETE,
 		MerchantCheckStatus: constant.WAIT_COMPLETE,
 		AgentIdSuper:        userInfo.ChannelAgentNo,
@@ -222,8 +222,8 @@ func convert(merchantApply *models.MerchantApply, applyRes *model2.ApplyRes) {
 		_ = json.Unmarshal([]byte(merchantApply.Shareholder4), shareholder4)
 		applyRes.Shareholder4 = shareholder4
 	}
-	if merchantApply.ShopInfo != "" {
-		_ = json.Unmarshal([]byte(merchantApply.ShopInfo), shopInfo)
+	if merchantApply.ShopInfos != "" {
+		_ = json.Unmarshal([]byte(merchantApply.ShopInfos), shopInfo)
 		applyRes.ShopInfo = shopInfo
 	}
 	if merchantApply.LegalOcrFront != "" {
